@@ -197,11 +197,13 @@ class TelegramAssistant(TelegramBot):
         info == False if the bot is not in the group or channel, and error == None if the check was successful,
         otherwise error contains the error message.
         """
+        entity = entity.replace('@', '').replace('https://t.me/', '').lower()
         try:
             async for dialog in self.client.iter_dialogs():
                 print(dialog.entity.username)
-                if dialog.entity.username == entity:
-                    return {'success': True, 'info': True, 'error': None}
+                if dialog.entity.username is not None:
+                    if dialog.entity.username.replace('@', '').replace('https://t.me/', '').lower() == entity:
+                        return {'success': True, 'info': True, 'error': None}
 
             return {'success': True, 'info': False, 'error': None}
         except Exception as e:
@@ -255,6 +257,7 @@ class TelegramAssistant(TelegramBot):
         successfully, otherwise info == False, and error == None if the query was successful, otherwise error contains
         the error message.
         """
+        entity = entity.replace('@', '').replace('https://t.me/', '').lower()
         try:
             print("Joining the channel...")
             await self.client(JoinChannelRequest(entity))
@@ -279,6 +282,7 @@ class TelegramAssistant(TelegramBot):
         successfully, otherwise info == False, and error == None if the query was successful, otherwise error contains
         the error message.
         """
+        entity = entity.replace('@', '').replace('https://t.me/', '').lower()
         try:
             await self.client(LeaveChannelRequest(entity))
             with sqlite3.connect('assistant.db') as conn:
@@ -392,7 +396,7 @@ class TelegramAssistant(TelegramBot):
 
                 groups_to_watch = []
                 for group in cursor.fetchall():
-                    groups_to_watch.append(group[0].replace('@', '').replace('https://t.me/', ''))
+                    groups_to_watch.append(group[0].replace('@', '').replace('https://t.me/', '').lower())
 
                 return {'success': True, 'info': groups_to_watch, 'error': None}
 
@@ -412,7 +416,7 @@ class TelegramAssistant(TelegramBot):
             with sqlite3.connect('assistant.db') as conn:
                 cursor = conn.cursor()
 
-                group_username = group_username.replace('@', '').replace('https://t.me/', '')
+                group_username = group_username.replace('@', '').replace('https://t.me/', '').lower()
                 cursor.execute('INSERT INTO groups_to_watch (group_username) VALUES (?)', (group_username,))
                 conn.commit()
 
