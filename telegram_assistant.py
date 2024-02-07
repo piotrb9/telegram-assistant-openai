@@ -139,6 +139,10 @@ class TelegramAssistant(TelegramBot):
             return str(self.get_groups_to_watch())
         elif function == "add_group_to_watchlist":
             return str(self.add_group_to_watchlist(**kwargs))
+        elif function == "remove_group_from_watchlist":
+            return str(self.remove_group_from_watchlist(**kwargs))
+        elif function == "add_comment":
+            return str(await self.add_comment(**kwargs))
 
     async def event_handler(self, event) -> None:
         """
