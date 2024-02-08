@@ -12,7 +12,6 @@ config = configparser.ConfigParser()
 config.read('config.ini')
 
 SESSIONS_FOLDER = config['FOLDERS']['SESSIONS_FOLDER']
-MEDIA_FOLDER = config['FOLDERS']['MEDIA_FOLDER']
 
 OPENAI_API_KEY = config['OPENAI']['OPENAI_API_KEY']
 

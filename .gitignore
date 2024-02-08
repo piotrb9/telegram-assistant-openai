@@ -1,4 +1,4 @@
-*.ini
+config.ini
 *.xml
 /.idea/
 /assistant.db
