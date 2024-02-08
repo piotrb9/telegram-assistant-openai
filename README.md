@@ -1,14 +1,14 @@
-# ETH Wallet Analyzer
+# Telegram Assistant
 
-Your personal AI assistant acting like a casual Telegram user. It can do tasks like any Telegram member such as:
+Your personal AI assistant acts like a casual Telegram user. It can do tasks like any Telegram member such as:
 - joining a channel/group
 - leaving a channel/group
 - sending a message to a user
 - commenting on channel posts
-- checking if its a member of a channel/group
+- checking if it is a member of a channel/group
 - showing a conversation history with a user/from a group or channel
 
-It also works with a simple database where it saved the data about the joined groups, channels/groups currently following and their messages.
+It also works with a simple database where it saves the data about the joined groups, channels/groups currently following and their messages.
 The bot writes the SQL query on its own, so it can do ANY task related to the database (like dropping the table)!
 
 ## Preview
@@ -27,9 +27,55 @@ Install the requirements
 pip install -r requirements.txt
 ```
 
-Download the repo on your local machine and run the
+Download the repo on your local machine
+
+Run the create_db.py file in the tools dir to initialize the database
+```python
+python tools/create_db.py
+```
+
+Rename the config_template.ini to config.ini and fill it with your data (do not include the [] brackets!)
+```
+IP = [Proxy IP]
+PORT = [Proxy Port]
+USERNAME = [Proxy Username]
+PASSWORD = [Proxy Password]
+
+Name of the session file, ie. '123456789.session'
+SESSION_FILE = [Session Filename]
+
+[Tutorial](https://docs.telethon.dev/en/stable/basic/signing-in.html)
+API_ID = [Your Telegram API ID]
+API_HASH = [Your Telegram API Hash]
+
+[Tutorial](https://openai.com/blog/openai-api)
+OPENAI_API_KEY = [Your OpenAI API Key]
+
+[Get it here](https://platform.openai.com/assistants)
+ASSISTANT_ID = [Assistant Identifier]
+THREAD_ID = [Thread Identifier]
+
+Username of the group where you will be sending the commands, ie. 'randomtelegramgroup3853'
+SERVICE_GROUP = [Service Group]
+```
+
+Paste .session file in the /sessions/ directory [What are session files and how to get them](https://docs.telethon.dev/en/stable/concepts/sessions.html).<br />
+I advice you to use the phone number as the file name (without the '+' but including the country code, like 123456789.session)
 
 ## Usage
+Create a service group with the username given in the config file. The bot will join it automatically if its public.
+
+Run the run_bot.py file
+```python
+python run_bot.py
+```
+
+Send commands to the bot and it will automatically respond. Do not exceed OpenAI API rate limits.
+
+If the bot crashes, sometimes you have to restart the OpenAI thread. You can use the /tools/cancel_openai_run.py to do it. It will clean the waiting commands.
+```python
+python tools/cancel_openai_run.py
+```
 
 ## Contributing
 
@@ -39,4 +85,7 @@ to discuss what you would like to change.
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
+
 Made with the OpenAI API
+
+**DISCLAIMER** For educational purposes only. I do not take responsibility for illegal use of the script, like sending spam or abusing the Telegram TOS!
