@@ -2,4 +2,5 @@ config.ini
 *.xml
 /.idea/
 /assistant.db
-/sessions/
+/sessions/*.json
+/sessions/*.session
