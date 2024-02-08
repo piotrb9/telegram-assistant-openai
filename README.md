@@ -73,6 +73,7 @@ python run_bot.py
 Send commands to the bot and it will automatically respond. Do not exceed OpenAI API rate limits.
 
 If the bot crashes, sometimes you have to restart the OpenAI thread. You can use the /tools/cancel_openai_run.py to do it. It will clean the waiting commands.
+Fill in the THREAD = "" variable with your thread id (you can find it in the console).
 ```python
 python tools/cancel_openai_run.py
 ```
