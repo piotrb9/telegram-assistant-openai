@@ -44,14 +44,14 @@ PASSWORD = [Proxy Password]
 Name of the session file, ie. '123456789.session'
 SESSION_FILE = [Session Filename]
 
-[Tutorial](https://docs.telethon.dev/en/stable/basic/signing-in.html)
+Tutorial: https://docs.telethon.dev/en/stable/basic/signing-in.html
 API_ID = [Your Telegram API ID]
 API_HASH = [Your Telegram API Hash]
 
-[Tutorial](https://openai.com/blog/openai-api)
+Tutorial: https://openai.com/blog/openai-api
 OPENAI_API_KEY = [Your OpenAI API Key]
 
-[Get it here](https://platform.openai.com/assistants)
+Get it here: https://platform.openai.com/assistants
 ASSISTANT_ID = [Assistant Identifier]
 THREAD_ID = [Thread Identifier]
 
