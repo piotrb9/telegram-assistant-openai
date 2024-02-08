@@ -24,9 +24,6 @@ class TelegramAssistant(TelegramBot):
         Initializes the Telegram Assistant with the provided API id, hash, bot token,
         list of whitelisted users, and service group username.
         """
-        # self.client = TelegramClient('assistant', api_id, api_hash).start(bot_token=bot_token)
-
-        # proxy_ip = None
         super().__init__(session_file, api_id, api_hash, sessions_folder=sessions_folder)
         print(f'Created new bot! Phone: {session_file}')
 
@@ -150,13 +147,8 @@ class TelegramAssistant(TelegramBot):
 
         :param event: The event to handle.
         """
-        print(event.raw_text)
-        # print(event)
 
         event_sender = await event.get_sender()
-        # print(f"Event sender: {event_sender}")
-        # print(f"Event chat username: {event.chat.username}")
-        # Check if the sender is in the whitelist and if the message is from the service group or a private message
         if (event_sender.username in self.whitelist_users_list) and event.is_private:
             print("Received a command in a DM!")
 
@@ -170,8 +162,6 @@ class TelegramAssistant(TelegramBot):
             if event.chat.username == self.service_group_username:
                 print("Received a command in the service group!")
 
-                # Get the text and handle it with The OpenAI API
-
                 # Get the response from the OpenAI API
                 response = await self.get_response(event.raw_text)
 
@@ -182,7 +172,6 @@ class TelegramAssistant(TelegramBot):
             elif event.chat.username in self.groups_to_watch:
                 print("Received a message in a group or channel!")
 
-                # group_id = event.message.peer_id.channel_id
                 group_username = event.chat.username
                 from_id = event.message.from_id
                 with sqlite3.connect('assistant.db') as conn:
@@ -204,14 +193,12 @@ class TelegramAssistant(TelegramBot):
         entity = entity.replace('@', '').replace('https://t.me/', '').lower()
         try:
             async for dialog in self.client.iter_dialogs():
-                print(dialog.entity.username)
                 if dialog.entity.username is not None:
                     if dialog.entity.username.replace('@', '').replace('https://t.me/', '').lower() == entity:
                         return {'success': True, 'info': True, 'error': None}
 
             return {'success': True, 'info': False, 'error': None}
         except Exception as e:
-            print(e)
             return {'success': False, 'info': None, 'error': str(e)}
 
     async def change_profilepic(self, pic):
@@ -333,7 +320,6 @@ class TelegramAssistant(TelegramBot):
             comment = await self.client.send_message(entity=entity, message=message, comment_to=comment_to_message_id,
                                                      schedule=schedule)
 
-            print(comment)
             return {'success': True, 'info': None, 'error': None}
         except Exception as e:
             return {'success': False, 'info': None, 'error': str(e)}
@@ -351,7 +337,6 @@ class TelegramAssistant(TelegramBot):
         try:
             messages = []
             async for message in self.client.iter_messages(entity, limit=limit):
-                # print(message)
                 sender = await message.get_sender()
                 messages.append(
                     {'id': message.id, 'sender': sender.username, 'text': message.text, 'date': message.date})
